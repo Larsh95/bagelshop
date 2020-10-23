@@ -1,114 +1,57 @@
 <template>
   <v-container>
     <v-row>
-      <v-col offset-md="1" md="5">
-        <h1>Menu Items</h1>
-        <div class="pa-2" id="info">
-          <v-simple-table id="menu-table">
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="text-left" style="width: 70%">Name</th>
-                  <th class="text-left" style="width: 100px">Calories</th>
-                  <th class="text-left" style="width: 100px">Price</th>
-                  <th class="text-left">Add to Basket</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in menuItems" :key="item.name">
-                  <td>
-                    <span id="td_name">{{ item.name }}</span> <br />
-                    <span id="menu_item_desc">{{ item.description }}</span>
-                  </td>
-                  <td>{{ item.calories }}</td>
-                  <td>{{ item.price }}</td>
+      <v-col offset-md="3" md="6">
+        <h1>Recipies</h1>
+        <div id="info">
+          <li v-for="item in menuItems" :key="item.name">
+          <span id="td_name">{{ item.name }}</span> <br/>
 
-                  <td>
-                    <v-btn text small @click="addToBasket(item)">
-                      <v-icon color="orange">add_box</v-icon>
-                    </v-btn>
-                  </td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+          
+          
+
+          <!-- <div >
+            <div >
+           <input type="file" ref="input1"
+            style="display: none"
+            @change="previewImage" accept="image/*" >                
+         </div>
+ 
+       <div v-if="imageData!=null">                     
+          <img class="preview" height="268" width="356" :src="img1">
+       <br>
+       </div>   
+      
+       </div> -->
+
+          <span id="sub">Total calories: {{ item.calories }}</span><br /><br/>
+          <h4>Ingredients:</h4>
+          <span id="sub"> {{ item.description }}</span><br /><br/>
+          <h4>Approach</h4>
+          <span id="sub">{{ item.howto }}</span><br /><br/>
+          
+          <span id="sub">{{ item.price }}</span><br /><br/>
+          </li>
+          <v-col id="o"></v-col>
+          <v-col id="fg"></v-col>
         </div>
       </v-col>
 
-      <v-col offset-md="1" md="4">
-        <h1>Current Basket</h1>
-        <div class="pa-2" id="info">
-          <v-simple-table id="menu-table" v-if="basket.length > 0">
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="text-left" style="width: 50%">Quantity</th>
-                  <th class="text-left" style="width: 50%">Name</th>
-                  <th class="text-left" style="width: 2%">image</th>
-                  <th class="text-left" style="width: 2%">Calories</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in basket" :key="item.name">
-                  <td>
-                    <v-icon color="orange" @click="increaseQtn(item)"
-                      >add_box</v-icon
-                    >
-                    {{ item.quantity }}
-                    <v-icon color="orange" @click="decreaseQtn(item)"
-                      >indeterminate_check_box</v-icon
-                    >
-                  </td>
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.image }}</td>
-                  <td>{{ item.calories }}</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-
-          <v-simple-table v-else>
-            <p>The basket is empty</p>
-          </v-simple-table>
-          <v-divider></v-divider>
-          <v-row id="basket_checkout" class="mt-4, p-0" style="margin: 0">
-            <v-col>
-              <p>Subtotal:</p>
-              <p>Delivery:</p>
-              <p>Total amount:</p>
-            </v-col>
-
-            <v-col class="text-right" style="margin-left: 30%">
-              <p>{{ subTotal }} DKK</p>
-              <p>10 DKK</p>
-              <p>
-                <b>{{ total }} DKK</b>
-              </p>
-            </v-col>
-            <v-col class="text-right">
-              <p>Calories: <br /></p>
-              <p>
-                {{ calTotal }}
-              </p>
-            </v-col>
-          </v-row>
-          <v-col style="margin: 0" class="text-right">
-            <v-btn color="orange"> checkout </v-btn>
-          </v-col>
-        </div>
-      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
 import { dbMenuAdd } from "../../firebase";
+// import firebase from 'firebase'
+// import 'firebase/firestore'
 
 export default {
   data() {
     return {
       basketDump: [],
       menuItems: [
+        
         // {
         //   name: 'Frozen Yogurt',
         //   description:"Yogurt, Sugar, Heavy Cream, Corn Syrup",
@@ -141,6 +84,7 @@ export default {
         // },
       ],
     };
+    
   },
   created() {
     dbMenuAdd.get().then((querySnapshot) => {
@@ -159,6 +103,7 @@ export default {
   },
 
   methods: {
+  
     addToBasket(item) {
       //   if (this.basket.find(itemInArray => item.name === itemInArray.name)) {
       //     item = this.basket.find(itemInArray => item.name === itemInArray.name);
@@ -217,7 +162,9 @@ export default {
       var totalCost = this.subTotal;
       return totalCost + DeliveryPrice;
     },
+    
   },
+  
 };
 </script>
 
@@ -225,44 +172,49 @@ export default {
 .col h1 {
   @include infobox_mixin(
     5px,
-    map-get($colorz, white),
+    map-get($colorz, nav),
     10px,
     5px,
-    map-get($colorz, orange)
+    map-get($colorz, primary)
   );
   font-weight: bold;
   text-transform: uppercase;
   font-size: 16px;
-  text-align: right;
+  text-align: center;
   padding: 5%;
+   background-color: #e5b285;
 }
 .col:last-child h1 {
-  text-align: left;
+  text-align: center;
 }
 #info {
-  background-color: white;
+  background-color: #faf2e8;
+  height: 100%;
+  width:100%;
 }
-tr th {
-  font-weight: 300;
+#sub {
+  display:flex; 
+  justify-content: center;
+  align-items: center;
+  white-space: pre-wrap
+}
+#td_name{
   font-weight: bold;
+  font-size: 40px;
+  display:flex; 
+  justify-content: center;
+  align-items: center;
 }
-#td_name {
-  font-weight: bold;
-}
-tr td {
-  padding: 10px 10px 10px 16px;
-}
-#menu_item_desc {
-  font-style: italic;
-  font-weight: 300;
-  color: map-get($colorz, darkgrey);
-  font-size: 13px;
+ 
+li{
+  list-style: none;
 }
 
-#basket_checkout {
-  font-size: 13px;
-}
-#basket_checkout p:first-child {
-  line-height: 2px;
+h4 {
+  font-weight: bold;
+  font-size: 30px;
+  display:flex; 
+  justify-content: center;
+  align-items: center;
 }
 </style>

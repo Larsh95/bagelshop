@@ -65,19 +65,19 @@
 </template>
 
 <script>
-import { db } from "../../firebase";
+//import { db } from "../../firebase";
 
-import firebase from "firebase";
-import "firebase/firestore";
-import store from "../store/index.js";
+// import firebase from "firebase";
+// import "firebase/firestore";
+// import store from "../store/index.js";
 
-firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    store.dispatch('setUser', user)
-  } else {
-    store.dispatch('setUser', null)
-  }
-});
+// firebase.auth().onAuthStateChanged(function (user) {
+//   if (user) {
+//     store.dispatch('setUser', user)
+//   } else {
+//     store.dispatch('setUser', null)
+//   }
+// });
 export default {
   data: () => ({
     drawer: null,

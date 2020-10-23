@@ -10,7 +10,7 @@
           <p>
             
 <br>
-Here you will find all our favorite recipes. They have been developed with the aim that they should all be easy to make and contain simple ingredients. It must be fun to cook and you must dare to challenge yourself and use your senses. I believe that it is much more fun to be in the kitchen if you experiment and adapt the dishes to your own taste buds.
+Here you will find all my favorite recipes. They have been developed with the aim that they should all be easy to make and contain simple ingredients. It must be fun to cook and you must dare to challenge yourself and use your senses. I believe that it is much more fun to be in the kitchen if you experiment and adapt the dishes to your own taste buds.
 <br><br>
 With me you will find easy dishes for sweet desserts and cakes, recipes for pastries and much more. Our universe has no limits and I develop recipes for ordinary people with a craving for good food.
 <br><br>

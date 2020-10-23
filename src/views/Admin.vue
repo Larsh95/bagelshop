@@ -14,6 +14,7 @@
                   <span style="padding:0 10px;">Add Item</span>
                   </v-btn>
           </th>
+          <th class="text-left" style="width:100px">Description</th>
           <th class="text-left" style="width:100px">Calories</th>
           <th class="text-left" style="width:100px">Price</th>
           

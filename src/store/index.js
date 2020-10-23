@@ -27,6 +27,7 @@ export default new Vuex.Store({
                     else {
                         state.basketItems.push({
                             name: item.name,
+                            description: item.description,
                             price: item.price,
                             calories: item.calories,
                             quantity: 1,
