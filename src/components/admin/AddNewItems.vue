@@ -11,7 +11,7 @@
           <v-file-input label="File input" @change="uploadImage"> </v-file-input>
 
           <v-text-field 
-          label="description" 
+          label="Ingredients" 
           required 
           v-model="description">
           </v-text-field>
@@ -22,7 +22,7 @@
             outlined
             rows="1"
             row-height="15"
-            label="Price"
+            label="Approach"
             required
             v-model="price"
             placeholder
@@ -58,12 +58,13 @@
       <v-col offset-md="1" md="4">
         <h1>Preview</h1>
         <div class="pa-2" id="info">
+          
           <v-simple-table id="menu-table">
             <thead>
               <tr>
                 <th class="text-left" style="width: 70%">Name</th>
-                <th class="text-left" style="width: 100px">description</th>
-                <th class="text-left" style="width: 100px">Price DKK</th>
+                <th class="text-left" style="width: 100px">Ingredients</th>
+                <th class="text-left" style="width: 100px">Approach</th>
                 <th class="text-left" style="width: 30%">Calories</th>
               </tr>
             </thead>

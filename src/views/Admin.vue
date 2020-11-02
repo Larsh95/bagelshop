@@ -1,8 +1,8 @@
 <template>
     <v-container>
         <v-row>
-            <v-col offset-md="1" md="4">
-              <h1>Current Bagels in menu items</h1>
+            <v-col offset-md="2" md="8">
+              <h1>Current Recipies</h1>
             <div class="pa-2"  id="info">
                 <v-simple-table id="menu-table">
                 <template v-slot:default>
@@ -14,9 +14,9 @@
                   <span style="padding:0 10px;">Add Item</span>
                   </v-btn>
           </th>
-          <th class="text-left" style="width:100px">Description</th>
+          <th class="text-left" style="width:100px">Ingredients</th>
           <th class="text-left" style="width:100px">Calories</th>
-          <th class="text-left" style="width:100px">Price</th>
+          <th class="text-left" style="width:100px">Approach</th>
           
         </tr>
          </thead>
@@ -46,46 +46,26 @@
                </v-simple-table>
                </div>
             </v-col>
-            <v-col offset-md="1" md="4">
-              <h1>Preview</h1>
-              <div class="pa-2" id="info">
-                Right
-              </div>
-            </v-col>
+
         </v-row>
     </v-container>
 </template>
 
 <script>
+
 import { dbMenuAdd } from '../../firebase'
 
 export default {
     data () {
       return {
-        basket: [],
-        menuItems: [
-          
-
-        ],
+        basket: []
       }
-      
     },
-    created() {
-        dbMenuAdd.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-            var menuItemData = doc.data();
-            this.menuItems.push({
-              id: doc.id,
-              name: menuItemData.name,
-              description: menuItemData.description,
-              price: menuItemData.price,
-              calories: menuItemData.calories     
-            })
-          })
-        })
-      },
-    methods: {
+
+    beforeCreated() {
+      this.$store.dispatch('setMenuItems')
+    },
+methods: {
       deleteItem(id) {
         dbMenuAdd.doc(id).delete().then(function(){
            // console.log("Document sucessfully deleted");
@@ -118,6 +98,9 @@ export default {
       },
     },
     computed: {
+      menuItems() {
+        return this.$store.getters.getMenuItems
+      },
         subTotal () {
           var subCost = 0;
           for(var items in this.basket) {

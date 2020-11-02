@@ -1,35 +1,9 @@
 <template>
   <div>
     <v-navigation-drawer color="primary" v-model="drawer" app>
-      <div v-if="currentUser">
-        <h4>{{ currentUser.email }}</h4>
+      <div v-if="currentUser" id="Loginas">
+        <h4>Logged in as: {{ currentUser.email }}</h4>
       </div>
-      <v-card class="mx-auto" max-width="434" tile>
-        <v-img
-          height="50%"
-          src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
-        >
-          <v-row align="end" class="fill-height">
-            <v-col align-self="start" class="pa-0" cols="12">
-              <v-avatar class="profile" color="grey" size="65" tile>
-                <v-img
-                  src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
-                ></v-img>
-              </v-avatar>
-            </v-col>
-            <v-col class="py-0">
-              <v-list-item color="rgba(0, 0, 0, .4)" dark>
-                <v-list-item-content>
-                  <v-list-item-title class="title">
-                    Marcus Obrien
-                  </v-list-item-title>
-                  <v-list-item-subtitle>Network Engineer</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-col>
-          </v-row>
-        </v-img>
-      </v-card>
 
       <ul>
         <router-link tag="li" to="/">
@@ -65,19 +39,21 @@
 </template>
 
 <script>
-//import { db } from "../../firebase";
+/* eslint-disable
+*/
+import { db } from "../../firebase";
 
-// import firebase from "firebase";
-// import "firebase/firestore";
-// import store from "../store/index.js";
+import firebase from "firebase";
+import "firebase/firestore";
+import store from "../store/index.js";
 
-// firebase.auth().onAuthStateChanged(function (user) {
-//   if (user) {
-//     store.dispatch('setUser', user)
-//   } else {
-//     store.dispatch('setUser', null)
-//   }
-// });
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    store.dispatch('setUser', user)
+  } else {
+    store.dispatch('setUser', null)
+  }
+});
 export default {
   data: () => ({
     drawer: null,
@@ -93,6 +69,14 @@ export default {
 <style lang="scss" scoped>
 .headline {
   @include infobox_mixin(none, none, none, none, map-get($colorz, white));
+}
+
+#Loginas{
+  color: white;
+  
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 li {
