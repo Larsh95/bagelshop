@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container height="1920px">
     <v-row>
       <v-col offset-md="3" md="6">
         <h1>Recipies</h1>
@@ -28,7 +28,7 @@
           <h4>Ingredients:</h4>
           <span id="sub"> {{ item.description }}</span><br /><br/>
           <h4>Approach</h4>
-          <span id="sub">{{ item.howto }}</span><br /><br/>
+          <!-- <span id="sub">{{ item.howto }}</span><br /><br/> -->
           
           <span id="sub">{{ item.price }}</span><br /><br/>
           </li>
@@ -189,7 +189,7 @@ export default {
 }
 #info {
   background-color: #faf2e8;
-  height: 100%;
+  height: auto;
   width:100%;
 }
 #sub {

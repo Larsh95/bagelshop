@@ -81,5 +81,6 @@ export default {
 <style lang="scss" scoped>
 #info {
     padding:20px;
+    background-color: white;
 }
 </style>

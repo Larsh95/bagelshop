@@ -1,22 +1,50 @@
 <template>
     <v-container>
+
+<v-snackbar
+      v-model="updatedSuccess"
+      top
+      color="#db885c"
+      rounded
+    >
+      {{ updatedText }}
+
+     
+        <v-btn
+          
+          color="White"
+          text
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      
+    </v-snackbar>
+
+
         <v-row>
             <v-col offset-md="2" md="8">
-              <h1>Current Recipies</h1>
+              <h1>Current Recipies 
+                </h1>
+                <v-btn id="add_new" color="orange" small text to="/addNew">
+                  <v-icon>add</v-icon> 
+                  <span style="padding:0 10px;">Add Item</span>
+                  </v-btn>
+              
             <div class="pa-2"  id="info">
                 <v-simple-table id="menu-table">
                 <template v-slot:default>
                 <thead>
                      <tr>
-          <th class="text-left" style="width:70%;">Name
-              <v-btn color="orange" small text to="/addNew">
-                  <v-icon>add</v-icon> 
-                  <span style="padding:0 10px;">Add Item</span>
-                  </v-btn>
+          <th class="text-left" style="width:100px;">Name of Recipie
+              
           </th>
+           <th class="text-left" style="width:100px">Calories</th>
           <th class="text-left" style="width:100px">Ingredients</th>
-          <th class="text-left" style="width:100px">Calories</th>
+         
           <th class="text-left" style="width:100px">Approach</th>
+          <th class="text-left" style="width:100px">Edit</th>
+          <th class="text-left" style="width:100px">Delete</th>
           
         </tr>
          </thead>
@@ -24,19 +52,25 @@
         <tr v-for="item in menuItems" :key="item.name">
           <td>
             <span id="td_name">{{ item.name }}</span>  <br>
-            <span id="menu_item_desc">{{ item.description }}</span>  
+            
+            
             </td>
-          <td>{{ item.calories }}</td>
+            <td>{{ item.calories }}</td>
+            <td>{{item.description }}</td>
+          
           <td>{{ item.price }}</td>
           
           
             <td>
-              <v-btn small text>
-                <v-icon color="orange">edit</v-icon>
+              <v-btn small text id="edit">
+                <v-icon color="orange"
+                @click.stop="dialog = true"
+                @click="editItem(item)"
+                >edit</v-icon>
               </v-btn>
             </td>
             <td>
-              <v-btn small text  @click="deleteItem(item.id)">
+              <v-btn id="del" small text  @click="deleteItem(item.id)">
                 <v-icon color=incomplete>delete</v-icon>
               </v-btn>
             </td>
@@ -48,6 +82,55 @@
             </v-col>
 
         </v-row>
+        <v-row>
+              <v-dialog
+      v-model="dialog"
+      max-width="400"
+    >
+      <v-card>
+        
+        <h1>Add New item</h1>
+        <div class="pa-2" id="info">
+          <v-text-field label="Name of Recipie"  v-model="item.name">
+          </v-text-field>
+
+          <v-file-input label="File input" @change="uploadImage"> </v-file-input>
+
+          <v-text-field 
+          label="Ingredients" 
+          required 
+          v-model="item.description">
+          </v-text-field>
+
+
+          <v-textarea
+            auto-grow
+            outlined
+            rows="1"
+            row-height="15"
+            label="Approach"
+            required
+            v-model="item.price"
+            placeholder
+            wrap
+          >
+          </v-textarea>
+
+          <v-text-field label="Calories" required v-model="item.calories">
+          </v-text-field>
+          <v-btn 
+          color="complete" 
+          @click="updateItem()"
+          :disabled="btnDisable"
+          > 
+          Edit Item </v-btn>
+          <v-btn color="incomplete"
+          @click.stop="dialog = false"> Close </v-btn>
+        </div>
+
+      </v-card>
+    </v-dialog>
+        </v-row>
     </v-container>
 </template>
 
@@ -58,18 +141,54 @@ import { dbMenuAdd } from '../../firebase'
 export default {
     data () {
       return {
-        basket: []
+        basket: [],
+        dialog: false,
+        item: [],
+        activeEditItem: null,
+        updatedSuccess: false,
+        updatedText: 'The recipie has been updated!'
       }
     },
 
-    beforeCreated() {
+    beforeCreate() {
       this.$store.dispatch('setMenuItems')
     },
+      //  created() {
+      //   dbMenuAdd.get().then((querySnapshot) => {
+      //     querySnapshot.forEach((doc) => {
+      //       console.log(doc.id, " => ", doc.data());
+      //       var menuItemData = doc.data();
+      //       this.menuItems.push({
+      //         id: doc.id,
+      //         name: menuItemData.name,
+      //         description: menuItemData.description,
+      //         price: menuItemData.price,
+      //         calories: menuItemData.calories     
+      //       })
+      //     })
+      //   })
+      // },
 methods: {
+      editItem(item) {
+        this.item = item
+        this.activeEditItem = item.id
+      },
+      updateItem() {
+        dbMenuAdd.doc(this.activeEditItem).update(this.item)
+        .then(() => {
+          this.updatedSuccess = true;
+          console.log("document updated");
+        })
+        .catch(function(error) {
+          console.error("Error updating Document: ", error);
+        })
+      },
       deleteItem(id) {
-        dbMenuAdd.doc(id).delete().then(function(){
+        dbMenuAdd.doc(id).delete()
+        .then(function(){
            // console.log("Document sucessfully deleted");
-        }).catch(function(error) {
+        })
+        .catch(function(error) {
            console.error("Error removing item: ", error);
         });
       }, 
@@ -141,6 +260,9 @@ methods: {
   
   text-align: left;
 }
+#edit {
+ 
+}
 #info {
     background-color: white;
 }
@@ -169,5 +291,10 @@ tr td {
   line-height: 2px;
 }
 
+#add_new{
+  display:flex;
+  justify-content: flex-start;
+  background-color: white;
+}
 
 </style>

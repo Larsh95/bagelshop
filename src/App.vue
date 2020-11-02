@@ -31,8 +31,9 @@ import Navigation from '@/components/Navigation.vue'
 
 <style lang="scss">
 main {
-  background-image: url('./assets/pandekager.jpg');
-  background-size: cover;
+  background-color: #d7bfa6;
+  height: auto;
+  display:flex;
 }
 .col h1 {
   @include infobox_mixin(
@@ -53,6 +54,7 @@ main {
   text-align: left;
 }
 #info {
-    background-color: white;
+    background-color:white;
+    height: auto;
 }
 </style>
