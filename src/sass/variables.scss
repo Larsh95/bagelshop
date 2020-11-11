@@ -7,10 +7,11 @@ $colorz: (
     nav: #e5b285,
     darkgrey: #707070,
     orange: #FC6D2B,
-    complete:#2BFC83,
+    complete:#db885c,
     inprogress: #FFB936,
-    incomplete: #FF1212,
+    incomplete: #db7037,
     lightgrey: #cacaca,
+    
 );
 
 @mixin infobox_mixin($boorder-radius, $border-color, $padding, $margin-bottom,$color,) {

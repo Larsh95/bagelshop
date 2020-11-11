@@ -9,9 +9,7 @@
     >
       {{ updatedText }}
 
-     
         <v-btn
-          
           color="White"
           text
           @click="snackbar = false"
@@ -23,15 +21,16 @@
 
 
         <v-row>
-            <v-col offset-md="2" md="8">
+            <v-col offset-md="1" md="10">
+              
+              
+            <div class="pa-2"  id="info">
               <h1>Current Recipies 
                 </h1>
                 <v-btn id="add_new" color="orange" small text to="/addNew">
                   <v-icon>add</v-icon> 
-                  <span style="padding:0 10px;">Add Item</span>
+                  <span style="padding:0 10px;">Add Recipie</span>
                   </v-btn>
-              
-            <div class="pa-2"  id="info">
                 <v-simple-table id="menu-table">
                 <template v-slot:default>
                 <thead>
@@ -89,23 +88,31 @@
     >
       <v-card>
         
-        <h1>Add New item</h1>
-        <div class="pa-2" id="info">
-          <v-text-field label="Name of Recipie"  v-model="item.name">
+        
+        <div class="pa-5" id="info" >
+          <h2>Edit Recipie</h2>
+          <v-text-field label="Name of Recipie"  v-model="item.name"
+          background-color="white">
           </v-text-field>
 
-          <v-file-input label="File input" @change="uploadImage"> </v-file-input>
-
-          <v-text-field 
-          label="Ingredients" 
-          required 
-          v-model="item.description">
-          </v-text-field>
+          <!-- <v-file-input label="File input" @change="uploadImage"> </v-file-input> -->
 
 
           <v-textarea
             auto-grow
-            outlined
+            rows="1"
+            row-height="15"
+            label="Ingredients"
+            required
+            v-model="item.description"
+            placeholder
+            wrap
+            background-color="white"
+          >
+          </v-textarea>
+
+          <v-textarea
+            auto-grow
             rows="1"
             row-height="15"
             label="Approach"
@@ -113,19 +120,26 @@
             v-model="item.price"
             placeholder
             wrap
+            background-color="white"
           >
           </v-textarea>
 
-          <v-text-field label="Calories" required v-model="item.calories">
+          <v-text-field label="Calories" required v-model="item.calories"
+          background-color="white">
           </v-text-field>
+          <v-row id="btnRow">
+            <v-col>
           <v-btn 
-          color="complete" 
+          id="add"
           @click="updateItem()"
-          :disabled="btnDisable"
+          
           > 
-          Edit Item </v-btn>
-          <v-btn color="incomplete"
+          Edit Item </v-btn></v-col>
+          <v-col align="right">
+          <v-btn id="cancel"
           @click.stop="dialog = false"> Close </v-btn>
+          </v-col>
+          </v-row>
         </div>
 
       </v-card>
@@ -242,29 +256,29 @@ methods: {
 </script>
 
 <style lang="scss" scoped>
+
 .col h1 {
   @include infobox_mixin(
     5px,
-    map-get($colorz, white),
+    map-get($colorz, pastry),
     10px,
     5px,
     map-get($colorz, orange)
   );
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 1.5em;
   text-align: right;
   padding:5%;
-}
-.col:last-child  h1{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height:30px;
   
-  text-align: left;
 }
-#edit {
- 
-}
+
 #info {
-    background-color: white;
+    background-color: #faf2e8;
 }
 tr th {
   font-weight: 300;
@@ -294,7 +308,24 @@ tr td {
 #add_new{
   display:flex;
   justify-content: flex-start;
-  background-color: white;
+  background-color: #faf2e8;
 }
-
+h2 {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.6em;
+  text-align: right;
+  padding:2%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  color: #FC6D2B;
+}
+#add, #cancel {
+  background-color: #db885c;
+  color: white;
+}
+#btnRow{
+  height: auto;
+}
 </style>

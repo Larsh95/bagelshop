@@ -46,6 +46,9 @@ export default {
 </script>
 
 <style lang="scss">
+main {
+    margin-top:3%;
+}
 .info_box .col h1 {
   @include infobox_mixin(
     5px,

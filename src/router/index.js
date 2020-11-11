@@ -8,6 +8,7 @@ import Login from '../components/admin/Login.vue'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import test from '../views/test.vue'
+
 Vue.use(VueRouter)
 
   const routes = [

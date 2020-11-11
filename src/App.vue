@@ -17,7 +17,7 @@
 import Navigation from '@/components/Navigation.vue'
   export default {
       components: {
-    Navigation
+    Navigation,
   },
     name: 'App',
     props: {
@@ -31,7 +31,7 @@ import Navigation from '@/components/Navigation.vue'
 
 <style lang="scss">
 main {
-  background-color: #d7bfa6;
+  
   height: auto;
   display:flex;
 }

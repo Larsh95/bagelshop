@@ -2,9 +2,13 @@
     <v-container>
         <v-row>
             <v-col offset-md="3" md="6" xs="12">
-                <h1>Admin login</h1>
+                
                 <div id="info">
+                    <h2>Admin login</h2>
                     <v-text-field 
+                    background-color="white"
+                    filled
+                    solo
                      v-model="email"
                      label="Email"    
                      required
@@ -12,26 +16,33 @@
                     </v-text-field>
 
                     <v-text-field 
+                     background-color="white"
+                     filled
+                     solo
                      v-model="password"
                      label="Password"    
                      required
                     >
                     </v-text-field>
-
+                    <v-row id="rowLog">
+                    <v-col align="left">
                     <v-btn 
-                        color="pastry"
+                        id="login"
                         @click.prevent="signIn()"
                         >
                             Login
                         </v-btn>
-                        
+                        </v-col>
+                        <v-col align="right">
                         <v-btn
-                        color="pastry"
+                        
+                        id="logout"
                         @click.prevent="signOut()"
                         >
-
                             Sign out
                         </v-btn>
+                        </v-col>
+                    </v-row>
                 </div>
             </v-col>
         </v-row>
@@ -81,6 +92,21 @@ export default {
 <style lang="scss" scoped>
 #info {
     padding:20px;
-    background-color: white;
+    margin-top:15%;
+    background-color: #e5b285;
+}
+#rowLog{
+    height: auto;
+}
+#login, #logout{
+    background-color: #db885c;
+    width: 130px;
+}
+h2 {
+    display:flex;
+    justify-content: center;
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 5%;
 }
 </style>

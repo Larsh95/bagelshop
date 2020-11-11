@@ -1,25 +1,33 @@
 <template>
   <v-container>
     <v-row>
-      <v-col offset-md="1" md="5">
-        <h1>Add New item</h1>
+      <v-col offset-md="1" md="5" xs="9" cols="12" >
+        
         <div class="pa-2" id="info">
-          <v-text-field label="Name of item" required v-model="name">
+          <h2>Add New Recipie</h2>
+          <v-text-field label="Name of Recipie" required v-model="name">
           </v-text-field>
 
-          
+        
           <v-file-input label="File input" @change="uploadImage"> </v-file-input>
 
-          <v-text-field 
-          label="Ingredients" 
-          required 
-          v-model="description">
-          </v-text-field>
+          <v-textarea
+            auto-grow
+            
+            rows="1"
+            row-height="15"
+            label="Ingredients"
+            required
+            v-model="description"
+            placeholder
+            wrap
+          >
+          </v-textarea>
 
 
           <v-textarea
             auto-grow
-            outlined
+            
             rows="1"
             row-height="15"
             label="Approach"
@@ -45,85 +53,72 @@
 
           <v-text-field label="Calories" required v-model="calories">
           </v-text-field>
+          <v-row id="btnRow">
+          <v-col >
           <v-btn 
-          color="complete" 
-          @click="addNewMenuItem()"
-          :disabled="btnDisable"
-          > 
-          Add Item </v-btn>
-          <v-btn color="incomplete"> Cancel </v-btn>
-        </div>
-      </v-col>
-
-      <v-col offset-md="1" md="4">
-        <h1>Preview</h1>
-        <div class="pa-2" id="info">
           
-          <v-simple-table id="menu-table">
-            <thead>
-              <tr>
-                <th class="text-left" style="width: 70%">Name</th>
-                <th class="text-left" style="width: 100px">Ingredients</th>
-                <th class="text-left" style="width: 100px">Approach</th>
-                <th class="text-left" style="width: 30%">Calories</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <span id="td_name"> {{ name }} </span>
-                </td>
-                <td>
-                  <span id="menu_item_desc"> {{ description }} </span>
-                </td>
-                <td id="preview_menuitem_price">{{ price }}</td>
-                <td id="preview_menuitem_calories">{{ calories }}</td>
-              </tr>
-            </tbody>
-          </v-simple-table>
+          @click="addNewMenuItem()"
+          id="add"
+          > 
+          Add Recipie </v-btn>
+          </v-col>
+          <v-col align="right">
+          <v-btn id="cancel"> Cancel </v-btn>
+          </v-col></v-row>
         </div>
       </v-col>
+     
+      <v-col id="preview" offset-md="1" md="4" xs="4" cols="12">
+        
+        <div class="pa-2" id="info2">
+          <h2>Preview</h2>
+          
+            <span id="td_name">{{ name }}</span> <br/>
+
+          <span id="sub">Calories: {{ calories }}</span><br /><br/>
+          <h4>Ingredients:</h4>
+          <span id="sub"> {{ description }}</span><br /><br/>
+          <h4>Approach</h4>
+          <!-- <span id="sub">{{ item.howto }}</span><br /><br/> -->
+          
+          <span id="sub">{{ price }}</span><br /><br/>
+
+         
+        </div>
+      </v-col>
+  
     </v-row>
   </v-container>
 </template>
 
 <script>
+/* eslint-disable
+*/
+
 import { dbMenuAdd, fb } from "../../../firebase";
 // import firebase from 'firebase'
 // import 'firebase/firestore'
 
 export default {
+  components: {
+
+  },
   data() {
     return {
       name: "",
       description: "",
       price: "",
-      calories: "",
-      image: null,
-      
+      calories: "",      
     };
   },
   methods: {
     uploadImage(e) {
       
-      let file = e.target.files[0];
-      console.log(e.target.files[0]);
-      var storageRef = fb.storage().ref('products/' + file.name);
-      let uploadTask = storageRef.put(file);
-
-      uploadTask.on('state_changed', () => {
-
-      }, () => {
-
-      }, () => {
-        
-        uploadTask.snapshot.ref.getDownloadURL().then((DownloadURL) => {
-          this.image = DownloadURL;
-          this.btnDisable = false;
-          console.log('File available at', DownloadURL);
-          
-        });
-      });
+      let file = e;
+      console.log(e);
+      var storageRef = fb.storage().ref(file.name);
+      var uploadTask = storageRef.put(file);
+      // let uploadTask = storageRef.put(file);
 
     },
     addNewMenuItem() {
@@ -133,6 +128,7 @@ export default {
         description: this.description,
         price: this.price,
         calories: this.calories,
+        
       });
     },
   },
@@ -183,7 +179,7 @@ export default {
 .col h1 {
   @include infobox_mixin(
     5px,
-    map-get($colorz, white),
+    map-get($colorz, pastry),
     10px,
     5px,
     map-get($colorz, orange)
@@ -193,12 +189,17 @@ export default {
   font-size: 16px;
   text-align: right;
   padding: 5%;
+ 
 }
 .col:last-child h1 {
   text-align: left;
 }
 #info {
-  background-color: white;
+  background-color: #faf2e8;
+}
+#info2{
+  background-color:  #faf2e8;
+
 }
 tr th {
   font-weight: 300;
@@ -223,4 +224,44 @@ tr td {
 #basket_checkout p:first-child {
   line-height: 2px;
 }
+#btnRow{
+  height: auto;
+}
+#add, #cancel {
+  background-color: #db885c;
+}
+
+h4 {
+  font-weight: bold;
+  font-size: 30px;
+  display:flex; 
+  justify-content: center;
+  align-items: center;
+}
+#sub {
+  display:flex; 
+  justify-content: center;
+  align-items: center;
+  white-space: pre-wrap
+}
+#td_name{
+  font-weight: bold;
+  font-size: 40px;
+  display:flex; 
+  justify-content: center;
+  align-items: center;
+}
+h2 {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.6em;
+  text-align: right;
+  padding:2%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  color: #FC6D2B;
+  border-bottom: 3px solid white;
+}
+
 </style>

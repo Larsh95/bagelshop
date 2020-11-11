@@ -64,6 +64,24 @@ export default new Vuex.Store({
             })
             state.menuItems = menuItems
         }
+    )},
+    setQtn: state => {
+        let menuQtn = []
+        dbMenuAdd.onSnapshot((snapshotItems) => {
+            menuQtn = []
+            snapshotItems.forEach((doc) => {
+                var menuQtnData = doc.data();
+                menuQtn.push({
+                    ...menuQtnData,
+                    // name:menuItemData.name,
+                    // description: menuItemData.description,
+                    // price: menuItemData.price,
+                    // calories: menuItemData.calories, 
+                    id: doc.id
+                })
+            })
+            state.menuQtn = menuQtn
+        }
     )}
 },
 
@@ -73,11 +91,15 @@ export default new Vuex.Store({
         },
         setMenuItems: context => {
             context.commit('setMenuItems')
+        },
+        setQtn: context => {
+            context.commit('setQtn')
         }
     },
     getters: {
         getBasketItems: state => state.basketItems,
         currentUser: state => state.currentUser,
         getMenuItems: state => state.menuItems,
+        getMenuQtn: state => state.menuQtn
     }
 })
