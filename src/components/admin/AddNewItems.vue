@@ -1,19 +1,20 @@
 <template>
   <v-container>
     <v-row>
-      <v-col offset-md="1" md="5" xs="9" cols="12" >
-        
+      <v-col offset-md="1" md="5" xs="9" cols="12">
         <div class="pa-2" id="info">
           <h2>Add New Recipie</h2>
           <v-text-field label="Name of Recipie" required v-model="name">
           </v-text-field>
 
-        
-          <v-file-input label="File input" @change="uploadImage"> </v-file-input>
+          <!--
+        <Upload></Upload>
+    -->
+          <v-file-input label="File input" @change="uploadImage">
+          </v-file-input>
 
           <v-textarea
             auto-grow
-            
             rows="1"
             row-height="15"
             label="Ingredients"
@@ -24,10 +25,8 @@
           >
           </v-textarea>
 
-
           <v-textarea
             auto-grow
-            
             rows="1"
             row-height="15"
             label="Approach"
@@ -37,8 +36,6 @@
             wrap
           >
           </v-textarea>
-
-          
 
           <!-- <div>
                 <v-btn @click="click1">choose a photo</v-btn>
@@ -54,72 +51,86 @@
           <v-text-field label="Calories" required v-model="calories">
           </v-text-field>
           <v-row id="btnRow">
-          <v-col >
-          <v-btn 
-          
-          @click="addNewMenuItem()"
-          id="add"
-          > 
-          Add Recipie </v-btn>
-          </v-col>
-          <v-col align="right">
-          <v-btn id="cancel"> Cancel </v-btn>
-          </v-col></v-row>
+            <v-col>
+              <v-btn @click="addNewMenuItem()" id="add"
+              :disabled="btnDisable"
+              > Add Recipie </v-btn>
+            </v-col>
+            <v-col align="right">
+              <v-btn id="cancel"> Cancel </v-btn>
+            </v-col></v-row
+          >
         </div>
       </v-col>
-     
+
       <v-col id="preview" offset-md="1" md="4" xs="4" cols="12">
-        
         <div class="pa-2" id="info2">
           <h2>Preview</h2>
-          
-            <span id="td_name">{{ name }}</span> <br/>
 
-          <span id="sub">Calories: {{ calories }}</span><br /><br/>
+          <span id="td_name">{{ name }}</span> <br />
+
+           <div id="divImage">
+            <v-img v-bind:src="image"></v-img>
+            </div>
+
+          <span id="sub">Calories: {{ calories }}</span
+          ><br /><br />
           <h4>Ingredients:</h4>
-          <span id="sub"> {{ description }}</span><br /><br/>
+          <span id="sub"> {{ description }}</span
+          ><br /><br />
           <h4>Approach</h4>
           <!-- <span id="sub">{{ item.howto }}</span><br /><br/> -->
-          
-          <span id="sub">{{ price }}</span><br /><br/>
 
-         
+          <span id="sub">{{ price }}</span
+          ><br /><br />
         </div>
       </v-col>
-  
     </v-row>
   </v-container>
 </template>
 
 <script>
 /* eslint-disable
-*/
-
+ */
+//import Upload from '../../components/Upload.vue'
 import { dbMenuAdd, fb } from "../../../firebase";
-// import firebase from 'firebase'
-// import 'firebase/firestore'
+import firebase from "firebase";
+import "firebase/firestore";
 
 export default {
   components: {
-
+    //    Upload
   },
   data() {
     return {
       name: "",
       description: "",
       price: "",
-      calories: "",      
+      calories: "",
+      image: null,
+      btnDisable: true,
     };
   },
   methods: {
     uploadImage(e) {
-      
       let file = e;
       console.log(e);
-      var storageRef = fb.storage().ref(file.name);
+      var storageRef = firebase.storage().ref("products/" + file.name);
       var uploadTask = storageRef.put(file);
-      // let uploadTask = storageRef.put(file);
+      
 
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {},
+         () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.image = downloadURL;
+            this.btnDisable = false;
+            console.log("File available at", downloadURL);
+          });
+        }
+      );
     },
     addNewMenuItem() {
       dbMenuAdd.add({
@@ -128,50 +139,10 @@ export default {
         description: this.description,
         price: this.price,
         calories: this.calories,
-        
+        image: this.image,
       });
     },
   },
-  //   create () {
-
-  //       const post = {
-  //         photo: this.img1,
-  //         caption: this.caption
-  //       }
-
-  //       firebase.database().ref('PhotoGallery').push(post)
-  //       .then((response) => {
-  //         console.log(response)
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  //     },
-  //   click1() {
-  //   this.$refs.input1.click()
-  // },
-
-  // previewImage(event) {
-  //   this.uploadValue=0;
-  //   this.img1=null;
-  //   this.imageData = event.target.files[0];
-  //   this.onUpload()
-  // },
-
-  // onUpload(){
-  //   this.img1=null;
-  //   const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
-  //   storageRef.on(`state_changed`,snapshot=>{
-  //   this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-  //     }, error=>{console.log(error.message)},
-  //   ()=>{this.uploadValue=100;
-  //       storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-  //           this.img1 =url;
-  //           console.log(this.img1)
-  //         });
-  //       }
-  //     );
-  //  },
 };
 </script>
 
@@ -262,6 +233,14 @@ h2 {
   justify-content: center;
   color: #FC6D2B;
   border-bottom: 3px solid white;
+}
+#divImage{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  margin:auto;
+  margin-bottom: 5%;
 }
 
 </style>

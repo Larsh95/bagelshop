@@ -16,6 +16,7 @@
       </v-col>
     </v-row>
     <transition-group name="fade">
+         
       <v-card
         class="mx-auto pa-3 ma-2 text-center"
         max-width="400"
@@ -25,7 +26,7 @@
       >
         <v-row>
           <v-cols cols="8">
-            <v-list-item-title class="headline mb-1">{{ item.comments }}</v-list-item-title>
+            <v-list-item-title class="headline mb-1">{{ comment.text }}</v-list-item-title>
           </v-cols>
           <v-cols cols="4">
             <v-btn icon color="red" @click="deleteComment(comment.id)">
@@ -33,7 +34,9 @@
             </v-btn>
           </v-cols>
         </v-row>
+      
       </v-card>
+     
     </transition-group>
   </div>
 </template>
@@ -44,10 +47,12 @@ import {fb} from '../../firebase'
 export default {
     data() {
         return {
+       
             comments: [],
             newItem: "",
         }
     },
+
  methods: {
     async addItem() {
       if (this.newItem) {

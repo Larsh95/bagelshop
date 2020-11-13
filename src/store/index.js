@@ -17,26 +17,26 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        addBasketItems: (state, basketItems) => {
-            if (basketItems instanceof Array) {
-                basketItems.forEach(item => {
-                    if (state.basketItems.find(itemInArray => item.name === itemInArray.name)) {
-                        item = state.basketItems.find(itemInArray => item.name === itemInArray.name);
-                        item.quantity++
-                    }
-                    else {
-                        state.basketItems.push({
-                            name: item.name,
-                            description: item.description,
-                            price: item.price,
-                            calories: item.calories,
-                            quantity: 1,
-                        })
-                    }
+        // addBasketItems: (state, basketItems) => {
+        //     if (basketItems instanceof Array) {
+        //         basketItems.forEach(item => {
+        //             if (state.basketItems.find(itemInArray => item.name === itemInArray.name)) {
+        //                 item = state.basketItems.find(itemInArray => item.name === itemInArray.name);
+        //                 item.quantity++
+        //             }
+        //             else {
+        //                 state.basketItems.push({
+        //                     name: item.name,
+        //                     description: item.description,
+        //                     price: item.price,
+        //                     calories: item.calories,
+        //                     quantity: 1,
+        //                 })
+        //             }
 
-                })
-            }
-        },
+        //         })
+        //     }
+        // },
         userStatus (state, user) {
             if(user) {
                 state.currentUser = user

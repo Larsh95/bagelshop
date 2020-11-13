@@ -44,21 +44,19 @@
 <v-spacer></v-spacer>
       
   <v-row class="d-flex justify-center" id="commentBox">
-      <v-toolbar-menu class="heada" id="toolbarMenu">
+      <div class="heada" id="toolbarMenu">
         <v-col id="navCol">
         <router-link tag="li" to="/" id="sNone">
           <v-icon id="sNone" color="orange">home</v-icon> Home</router-link
         >
        
-        <router-link tag="li" to="/recipies" id="sNone">
+        <router-link tag="ol" to="/recipies" id="sNone">
           <v-icon color="orange" id="sNone" >restaurant_menu</v-icon> Recipies</router-link
         >
-        <router-link tag="li" to="/About" id="sNone"
-          ><v-icon color="orange" id="sNone">info</v-icon>About</router-link
-        >
+
         </v-col>  
       
-      </v-toolbar-menu>
+      </div>
       </v-row>
       <v-spacer></v-spacer>
       
@@ -102,7 +100,7 @@ export default {
 
 .headline {
   @include infobox_mixin(none, none, none, none, map-get($colorz, white));
-  z-index: 0;
+  
 }
 hr {
   border: 2px solid white;
@@ -144,7 +142,8 @@ nav li:last-child {
   color: map-get($colorz, white);
 }
 #navDrawer{
-  background-color: #e5b285,
+  background-color: #e5b285;
+  z-index: 99999;
 }
 .heada{
   @include infobox_mixin(none, none, none, none, map-get($colorz, white));

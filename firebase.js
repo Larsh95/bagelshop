@@ -8,14 +8,13 @@ import 'firebase/storage'
    authDomain: "bagelshop-d4cad.firebaseapp.com",
    databaseURL: "https://bagelshop-d4cad.firebaseio.com",
    projectId: "bagelshop-d4cad",
-   storageBucket: "bagelshop-d4cad.appspot.com/Products",
+   storageBucket: "bagelshop-d4cad.appspot.com",
    messagingSenderId: "441358505398",
    appId: "1:441358505398:web:8f59558e08b1df8e6a1d17"
  };
 
  // Initialize Firebase
  export const fb = firebase.initializeApp(firebaseConfig).firestore();
-
 
  export const db = firebase.firestore()
  export const dbMenuAdd = db.collection('menuItems');

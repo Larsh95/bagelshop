@@ -38,6 +38,7 @@
           <th class="text-left" style="width:100px;">Name of Recipie
               
           </th>
+          <th class="text-left" style="width:100px">Img</th>
            <th class="text-left" style="width:100px">Calories</th>
           <th class="text-left" style="width:100px">Ingredients</th>
          
@@ -54,6 +55,9 @@
             
             
             </td>
+            <div id="divImage">
+            <v-img v-bind:src="item.image"></v-img>
+            </div>
             <td>{{ item.calories }}</td>
             <td>{{item.description }}</td>
           
@@ -127,6 +131,7 @@
           <v-text-field label="Calories" required v-model="item.calories"
           background-color="white">
           </v-text-field>
+
           <v-row id="btnRow">
             <v-col>
           <v-btn 
@@ -327,5 +332,18 @@ h2 {
 }
 #btnRow{
   height: auto;
+}
+
+#divImage{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50px;
+  max-height: 30px;
+  margin-top: 5%;
+}
+
+@media (min-width: 900px) {
+   
 }
 </style>

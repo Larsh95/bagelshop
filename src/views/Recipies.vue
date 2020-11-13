@@ -7,6 +7,10 @@
           <li v-for="item in menuItems" :key="item.name">
             <span id="td_name">{{ item.name }}</span> <br />
 
+            <div id="divImage">
+            <v-img v-bind:src="item.image"></v-img>
+            </div>
+
             <!-- <div >
             <div >
            <input type="file" ref="input1"
@@ -21,7 +25,7 @@
       
        </div> -->
 
-            <span id="sub">Total calories: {{ item.calories }}</span
+            <span id="sub">Total Calories: {{ item.calories }}</span
             ><br /><br />
             <v-row>
               <v-col>
@@ -92,8 +96,9 @@
 </template>
 
 <script>
+
 import Comments from '../components/Comments.vue'
-import { dbMenuAdd, dbQtn } from "../../firebase";
+import { dbMenuAdd } from "../../firebase";
 // import firebase from 'firebase'
 // import 'firebase/firestore'
 
@@ -110,7 +115,9 @@ export default {
       increaseRating: +1,
     };
   },
-
+// beforeCreate() {
+//       this.$store.dispatch('setMenuItems')
+//     },
   created() {
     dbMenuAdd.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -122,19 +129,20 @@ export default {
           description: menuItemData.description,
           price: menuItemData.price,
           calories: menuItemData.calories,
+          image: menuItemData.image,
         });
       });
     });
-    dbQtn.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // console.log(doc.id, " => ", doc.data());
-        var qtn = doc.data();
-        this.qtn.push({
-          id: doc.id,
-          qtn: qtn.name,
-        });
-      });
-    });
+    // dbQtn.get().then((querySnapshot) => {
+    //   querySnapshot.forEach((doc) => {
+    //     // console.log(doc.id, " => ", doc.data());
+    //     var qtn = doc.data();
+    //     this.qtn.push({
+    //       id: doc.id,
+    //       qtn: qtn.name,
+    //     });
+    //   });
+    // });
   },
 
   
@@ -179,31 +187,9 @@ export default {
     //   },
   },
   computed: {
-    // basket() {
-    //   //return this.$store.state.basketItems;
-    //   return this.$store.getters.getBasketItems;
-    // },
-    // subTotal() {
-    //   var subCost = 0;
-    //   for (var items in this.basket) {
-    //     var individualItem = this.basket[items];
-    //     subCost += individualItem.quantity * individualItem.price;
-    //   }
-    //   return subCost;
-    // },
-    // calTotal() {
-    //   var caTotal = 0;
-    //   for (var items in this.basket) {
-    //     var individualItem = this.basket[items];
-    //     caTotal += individualItem.quantity * individualItem.calories;
-    //   }
-    //   return caTotal;
-    // },
-    // total() {
-    //   var DeliveryPrice = 10;
-    //   var totalCost = this.subTotal;
-    //   return totalCost + DeliveryPrice;
-    // },
+    // menuItems() {
+    //     return this.$store.getters.getMenuItems
+    //   },
   },
 };
 </script>
@@ -265,5 +251,13 @@ hr {
 #below {
   margin-bottom: auto;
   margin-top: auto;
+}
+#divImage{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin:auto;
+  margin-bottom: 5%;
 }
 </style>
